@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Badges & Certificates | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/badges.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/" target="_blank">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal">
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees" class="nav-item">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges"
+               class="nav-item active">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    COMPANY ACHIEVEMENTS
+                </span>
+
+                <h1>
+                    Badges & Certificates
+                </h1>
+
+            </div>
+
+            <a
+                href="/admin/badges/add"
+                class="primary-button"
+            >
+                + Add Certificate
+            </a>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <div class="directory-header">
+
+                <div>
+
+                    <span class="section-label">
+                        CERTIFICATIONS
+                    </span>
+
+                    <h2>
+                        Company Achievements
+                    </h2>
+
+                    <p>
+                        Manage badges, awards and certificates
+                        displayed on digital cards.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if badges %}
+
+            <div class="badge-grid">
+
+                {% for badge in badges %}
+
+                <div class="badge-card">
+
+                    <div class="badge-image">
+
+                        {% if badge.image_path %}
+
+                        <img
+                            src="{{ badge.image_path }}"
+                            alt="{{ badge.title }}"
+                        >
+
+                        {% else %}
+
+                        <span>
+                            🏅
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="badge-content">
+
+                        <span class="section-label">
+                            CERTIFICATE
+                        </span>
+
+                        <h3>
+                            {{ badge.title }}
+                        </h3>
+
+                        <p>
+                            {{ badge.description or
+                               "No description provided." }}
+                        </p>
+
+                    </div>
+
+                    <div class="badge-actions">
+
+                        <a
+                            href="/admin/badges/{{ badge.id }}/edit"
+                            class="secondary-button"
+                        >
+                            Edit
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🏅
+                </div>
+
+                <h3>
+                    No badges or certificates
+                </h3>
+
+                <p>
+                    Add company certifications,
+                    awards and achievements.
+                </p>
+
+                <a
+                    href="/admin/badges/add"
+                    class="primary-button"
+                >
+                    + Add Certificate
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

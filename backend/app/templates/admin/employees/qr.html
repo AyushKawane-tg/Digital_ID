@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}
+QR Code | {{ employee.full_name }}
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}"
+>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', path='css/qr.css') }}?v={{ ASSET_V }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+
+            <a
+                href="https://teleglobals.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        path='images/logo/teleglobal-logo.png'
+                    ) }}"
+                    alt="TeleGlobal"
+                >
+
+            </a>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="/admin/dashboard"
+                class="nav-item"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="/admin/employees"
+                class="nav-item active"
+            >
+                <span>👥</span>
+                Employees
+            </a>
+
+
+            <a
+                href="/admin/company"
+                class="nav-item"
+            >
+                <span>🏢</span>
+                Company Profile
+            </a>
+
+
+            <a
+                href="/admin/locations"
+                class="nav-item"
+            >
+                <span>📍</span>
+                Locations
+            </a>
+
+
+            <a
+                href="/admin/badges"
+                class="nav-item"
+            >
+                <span>🏅</span>
+                Badges & Certificates
+            </a>
+
+
+            <a
+                href="/admin/company-deck"
+                class="nav-item"
+            >
+                <span>📄</span>
+                Company Deck
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="/logout"
+                class="nav-item logout"
+            >
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    DIGITAL IDENTITY
+                </span>
+
+                <h1>
+                    QR Code
+                </h1>
+
+            </div>
+
+
+            <a
+                href="/admin/employees"
+                class="secondary-button"
+            >
+                ← Employees
+            </a>
+
+        </header>
+
+
+        <section class="qr-page">
+
+            <div class="qr-card">
+
+                <div class="qr-header">
+
+                    <span class="section-label">
+                        DIGITAL EMPLOYEE CARD
+                    </span>
+
+                    <h2>
+                        {{ employee.full_name }}
+                    </h2>
+
+                    <p>
+                        {{ employee.designation }}
+                        ·
+                        {{ employee.employee_id }}
+                    </p>
+
+                </div>
+
+
+                <!-- QR CODE -->
+
+                <div class="qr-image-wrapper">
+
+                    <img
+                        src="/card/{{ employee.employee_id }}/qr"
+                        alt="QR Code for {{ employee.full_name }}"
+                        class="qr-image"
+                    >
+
+                </div>
+
+
+                <!-- URL -->
+
+                <div class="qr-url">
+
+                    <span>
+                        Digital Card URL
+                    </span>
+
+                    <input
+                        id="cardUrl"
+                        type="text"
+                        value="{{ employee.digital_card_url }}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="qr-actions">
+
+                    <a
+                        href="{{ employee.digital_card_url }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="primary-button"
+                    >
+                        Open Digital Card
+                    </a>
+
+
+                    <button
+                        type="button"
+                        id="copyCardUrl"
+                        class="secondary-button"
+                    >
+                        Copy URL
+                    </button>
+
+
+                    <a
+                        href="/card/{{ employee.employee_id }}/qr/download"
+                        class="secondary-button"
+                    >
+                        Download QR
+                    </a>
+
+                </div>
+
+
+                <!-- INSTRUCTIONS -->
+
+                <div class="qr-instruction">
+
+                    <span class="instruction-icon">
+                        📱
+                    </span>
+
+                    <p>
+                        Scan this QR code with any smartphone
+                        camera to open this employee's digital card.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

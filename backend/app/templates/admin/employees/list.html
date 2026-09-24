@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+
+{% block title %}Employees | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/employee.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/"
+               target="_blank">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal"
+                >
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="/admin/employees"
+               class="nav-item active">
+                <span>👥</span>
+                Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span>
+                Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span>
+                Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span>
+                Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span>
+                Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    EMPLOYEE MANAGEMENT
+                </span>
+
+                <h1>
+                    Employees
+                </h1>
+
+            </div>
+
+            <div class="topbar-actions">
+
+                <a
+                    href="/admin/employees/import"
+                    class="secondary-button"
+                >
+                    Import Excel
+                </a>
+
+                <a
+                    href="/admin/employees/add"
+                    class="primary-button"
+                >
+                    + Add Employee
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <div class="directory-header">
+
+                <div>
+
+                    <span class="section-label">
+                        EMPLOYEE DIRECTORY
+                    </span>
+
+                    <h2>
+                        All Employees
+                    </h2>
+
+                    <p>
+                        Manage employee profiles and
+                        digital identity cards.
+                    </p>
+
+                </div>
+
+                <div class="employee-count">
+
+                    <strong>
+                        {{ employees|length }}
+                    </strong>
+
+                    <span>
+                        Employees
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="employee-table-card">
+
+                <div class="table-toolbar">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="search"
+                            id="employeeSearch"
+                            placeholder="Search employee..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+                {% if employees %}
+
+                <div class="table-wrapper">
+
+                    <table class="employee-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Employee</th>
+                                <th>Employee ID</th>
+                                <th>Designation</th>
+                                <th>Department</th>
+                                <th>Contact</th>
+                                <th>Card</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="employeeTableBody">
+
+                            {% for employee in employees %}
+
+                            <tr class="employee-row">
+
+                                <td>
+
+                                    <div class="employee-cell">
+
+                                        {% if employee.picture %}
+
+                                        <img
+                                            src="/uploads/{{ employee.picture }}"
+                                            alt="{{ employee.full_name }}"
+                                            class="employee-avatar"
+                                        >
+
+                                        {% else %}
+
+                                        <div class="employee-avatar placeholder">
+                                            {{ employee.full_name[0]|upper }}
+                                        </div>
+
+                                        {% endif %}
+
+                                        <div>
+
+                                            <strong>
+                                                {{ employee.full_name }}
+                                            </strong>
+
+                                            <span>
+                                                {{ employee.official_email }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    <span class="employee-id">
+                                        {{ employee.employee_id }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ employee.designation }}
+                                </td>
+
+                                <td>
+                                    {{ employee.department }}
+                                </td>
+
+                                <td>
+                                    {{ employee.contact_number }}
+                                </td>
+
+                                <td>
+
+                                    {% if employee.digital_card_url %}
+
+                                    <a
+                                        href="/card/{{ employee.employee_id }}"
+                                        target="_blank"
+                                        class="card-link"
+                                    >
+                                        View Card
+                                    </a>
+
+                                    {% else %}
+
+                                    <span class="not-generated">
+                                        Not Generated
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    <div class="table-actions">
+
+                                        <a
+                                            href="/admin/employees/{{ employee.id }}"
+                                            title="View"
+                                        >
+                                            👁
+                                        </a>
+
+                                        <a
+                                            href="/admin/employees/{{ employee.id }}/edit"
+                                            title="Edit"
+                                        >
+                                            ✎
+                                        </a>
+
+                                        <a
+                                            href="/admin/employees/{{ employee.id }}/qr"
+                                            title="QR Code"
+                                        >
+                                            ▣
+                                        </a>
+
+                                        <form
+                                            method="POST"
+                                            action="/admin/employees/{{ employee.id }}/delete"
+                                            class="delete-form"
+                                            onsubmit="return confirm('Delete employee {{ employee.full_name }} ({{ employee.employee_id }})? This cannot be undone.');"
+                                        >
+                                            <button
+                                                type="submit"
+                                                class="delete-btn"
+                                                title="Delete"
+                                            >
+                                                🗑
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        👥
+                    </div>
+
+                    <h3>
+                        No employees found
+                    </h3>
+
+                    <p>
+                        Add an employee or import employees
+                        using an Excel file.
+                    </p>
+
+                    <div class="empty-actions">
+
+                        <a
+                            href="/admin/employees/add"
+                            class="primary-button"
+                        >
+                            + Add Employee
+                        </a>
+
+                        <a
+                            href="/admin/employees/import"
+                            class="secondary-button"
+                        >
+                            Import Excel
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+const searchInput =
+    document.getElementById("employeeSearch");
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const query =
+                this.value.toLowerCase().trim();
+
+            document
+                .querySelectorAll(".employee-row")
+                .forEach(row => {
+
+                    const text =
+                        row.textContent.toLowerCase();
+
+                    row.style.display =
+                        text.includes(query)
+                            ? ""
+                            : "none";
+
+                });
+
+        }
+    );
+
+}
+
+</script>
+
+{% endblock %}

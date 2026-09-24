@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}
+TeleGlobal | Login
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', path='css/auth.css') }}?v={{ ASSET_V }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <div class="login-container">
+
+        <!-- LEFT BRAND SECTION -->
+        <div class="login-brand">
+
+            <div class="brand-logo">
+                <a
+                    href="https://teleglobals.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img
+                        src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                        alt="TeleGlobal"
+                    >
+                </a>
+            </div>
+
+            <div class="brand-content">
+
+                <span class="brand-label">
+                    DIGITAL IDENTITY PLATFORM
+                </span>
+
+                <h1>
+                    Your Digital
+                    <span>Identity.</span>
+                </h1>
+
+                <p>
+                    Secure digital visiting cards and employee
+                    identity cards for TeleGlobal.
+                </p>
+
+            </div>
+
+            <div class="brand-footer">
+                <span>Empowering Business Globally</span>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT LOGIN SECTION -->
+        <div class="login-form-section">
+
+            <div class="login-form-wrapper">
+
+                <div class="mobile-logo">
+                    <a
+                        href="https://teleglobals.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                            alt="TeleGlobal"
+                        >
+                    </a>
+                </div>
+
+                <div class="login-heading">
+
+                    <span class="welcome-text">
+                        WELCOME BACK
+                    </span>
+
+                    <h2>
+                        Sign in to your account
+                    </h2>
+
+                    <p>
+                        Access your TeleGlobal digital card
+                        platform.
+                    </p>
+
+                </div>
+
+
+                {% if error %}
+
+                <div class="login-error">
+
+                    <span class="error-icon">!</span>
+
+                    <span>
+                        {{ error }}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+
+                <form
+                    method="POST"
+                    action="/login"
+                    class="login-form"
+                >
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+
+                        <label for="email">
+                            Official Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="name@teleglobals.com"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+
+                        <div class="password-label-row">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                        </div>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- REMEMBER -->
+                    <div class="login-options">
+
+                        <label class="remember-option">
+
+                            <input
+                                type="checkbox"
+                                name="remember"
+                            >
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+                    <button
+                        type="submit"
+                        class="login-button"
+                    >
+
+                        <span>
+                            Sign In
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <div class="login-security">
+
+                    <span class="security-icon">
+                        🔐
+                    </span>
+
+                    <span>
+                        Secure access to your digital identity
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+const passwordInput =
+    document.getElementById("password");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
+
+if (passwordToggle && passwordInput) {
+
+    passwordToggle.addEventListener(
+        "click",
+        function () {
+
+            const isPassword =
+                passwordInput.type === "password";
+
+            passwordInput.type =
+                isPassword ? "text" : "password";
+
+            this.textContent =
+                isPassword ? "🙈" : "👁";
+
+        }
+    );
+
+}
+
+</script>
+
+{% endblock %}

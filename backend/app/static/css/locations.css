@@ -1,0 +1,102 @@
+/* =========================================================
+   TeleGlobal Digital Card Platform
+   Company Locations
+   ========================================================= */
+
+.location-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.location-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eef4;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 14px rgba(17, 48, 80, 0.05);
+}
+
+.location-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    background: #eaf3fb;
+
+    border-radius: 10px;
+
+    font-size: 20px;
+}
+
+.location-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.location-content h3 {
+    margin: 4px 0 8px;
+
+    color: #173f64;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.location-content p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.location-contact {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #0b5cab;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.location-actions {
+    flex-shrink: 0;
+}
+
+/* =========================
+   Location form
+   ========================= */
+
+.location-form {
+    max-width: 750px;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 820px) {
+    .location-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .location-card {
+        flex-direction: column;
+    }
+}

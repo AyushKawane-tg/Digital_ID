@@ -1,0 +1,429 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .edit-page {
+        min-height: 100vh;
+        background: #f5f8fc;
+        padding: 30px 20px;
+    }
+
+    .edit-container {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 22px;
+    }
+
+    .topbar h1 {
+        margin: 0;
+        color: #12395d;
+    }
+
+    .btn {
+        border: 0;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-light {
+        background: #eaf1f7;
+        color: #174a78;
+    }
+
+    .btn-primary {
+        background: #0b5cab;
+        color: white;
+    }
+
+    .form-card {
+        background: white;
+        border: 1px solid #e1e8ef;
+        border-radius: 16px;
+        padding: 28px;
+        margin-bottom: 20px;
+    }
+
+    .form-card h3 {
+        margin: 0 0 20px;
+        color: #173f64;
+        border-bottom: 1px solid #edf1f5;
+        padding-bottom: 13px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px 25px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #52677b;
+        margin-bottom: 7px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #d6e0e8;
+        border-radius: 8px;
+        padding: 11px 12px;
+        font-size: 14px;
+        outline: none;
+        background: white;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: #0b5cab;
+        box-shadow: 0 0 0 3px rgba(11, 92, 171, .08);
+    }
+
+    input[readonly] {
+        background: #f3f6f8;
+        color: #718096;
+    }
+
+    .hint {
+        color: #8997a4;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .photo-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .photo-preview {
+        width: 100px;
+        height: 100px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid #dce5ed;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .message {
+        display: none;
+        margin-bottom: 18px;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .message.success {
+        background: #e8f7ee;
+        color: #187442;
+    }
+
+    .message.error {
+        background: #fdecec;
+        color: #b42318;
+    }
+
+    @media (max-width: 700px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full {
+            grid-column: auto;
+        }
+
+        .photo-section {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .topbar {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="edit-page">
+    <div class="edit-container">
+
+        <div class="topbar">
+            <h1>Edit My Profile</h1>
+            <a href="/employee/profile" class="btn btn-light">
+                Back to Profile
+            </a>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <form id="profileForm">
+
+            <div class="form-card">
+
+                <h3>Personal Information</h3>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Employee ID</label>
+                        <input
+                            type="text"
+                            value="{{ employee.employee_id }}"
+                            readonly>
+                        <span class="hint">Employee ID cannot be changed.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input
+                            type="text"
+                            name="full_name"
+                            value="{{ employee.full_name }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Designation *</label>
+                        <input
+                            type="text"
+                            name="designation"
+                            value="{{ employee.designation }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Department / Business Unit *</label>
+                        <input
+                            type="text"
+                            name="department"
+                            value="{{ employee.department }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Official Email *</label>
+                        <input
+                            type="email"
+                            name="official_email"
+                            value="{{ employee.official_email }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Number *</label>
+                        <input
+                            type="text"
+                            name="contact_number"
+                            value="{{ employee.contact_number }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Emergency Contact</label>
+                        <input
+                            type="text"
+                            name="emergency_contact"
+                            value="{{ employee.emergency_contact or '' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Office Location *</label>
+                        <input
+                            type="text"
+                            name="office_location"
+                            value="{{ employee.office_location }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input
+                            type="date"
+                            name="date_of_birth"
+                            value="{{ employee.date_of_birth or '' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Blood Group</label>
+                        <select name="blood_group">
+                            <option value="">Select</option>
+                            {% for group in ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"] %}
+                                <option
+                                    value="{{ group }}"
+                                    {% if employee.blood_group == group %}selected{% endif %}>
+                                    {{ group }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-card">
+
+                <h3>Professional & Social Profiles</h3>
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label>LinkedIn URL *</label>
+                        <input
+                            type="url"
+                            name="linkedin_url"
+                            value="{{ employee.linkedin_url }}"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Instagram URL</label>
+                        <input
+                            type="url"
+                            name="instagram_url"
+                            value="{{ employee.instagram_url or '' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Facebook URL</label>
+                        <input
+                            type="url"
+                            name="facebook_url"
+                            value="{{ employee.facebook_url or '' }}">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-card">
+
+                <h3>Profile Picture</h3>
+
+                <div class="photo-section">
+
+                    {% if employee.picture %}
+                        <img
+                            id="photoPreview"
+                            src="{{ employee.picture }}"
+                            class="photo-preview"
+                            alt="Profile">
+                    {% else %}
+                        <img
+                            id="photoPreview"
+                            src="{{ url_for('static', path='images/default/employee-placeholder.png') }}"
+                            class="photo-preview"
+                            alt="Profile">
+                    {% endif %}
+
+                    <div>
+                        <input
+                            type="file"
+                            id="picture"
+                            name="picture"
+                            accept="image/png,image/jpeg,image/webp">
+
+                        <div class="hint">
+                            Recommended: square image, preferably 1:1.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <a href="/employee/profile" class="btn btn-light">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const form = document.getElementById("profileForm");
+const picture = document.getElementById("picture");
+const preview = document.getElementById("photoPreview");
+const message = document.getElementById("message");
+
+picture.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+    }
+});
+
+form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    message.style.display = "none";
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch("/employee/profile", {
+            method: "PUT",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Unable to update profile.");
+        }
+
+        message.className = "message success";
+        message.textContent = "Profile updated successfully.";
+        message.style.display = "block";
+
+        setTimeout(() => {
+            window.location.href = "/employee/profile";
+        }, 1000);
+
+    } catch (error) {
+        message.className = "message error";
+        message.textContent = error.message;
+        message.style.display = "block";
+    }
+});
+</script>
+{% endblock %}

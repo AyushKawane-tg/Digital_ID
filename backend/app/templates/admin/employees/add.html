@@ -1,0 +1,378 @@
+{% extends "base.html" %}
+
+{% block title %}Add Employee | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/employee.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/"
+               target="_blank">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal"
+                >
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees"
+               class="nav-item active">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    EMPLOYEE MANAGEMENT
+                </span>
+
+                <h1>
+                    Add Employee
+                </h1>
+
+            </div>
+
+            <a
+                href="/admin/employees"
+                class="secondary-button"
+            >
+                ← Back
+            </a>
+
+        </header>
+
+
+        <section class="form-page">
+
+            <form
+                method="POST"
+                action="/admin/employees"
+                enctype="multipart/form-data"
+                class="employee-form"
+            >
+
+                <!-- PERSONAL INFORMATION -->
+                <div class="form-card">
+
+                    <div class="form-card-header">
+
+                        <div>
+                            <span class="section-label">
+                                PERSONAL INFORMATION
+                            </span>
+
+                            <h2>
+                                Employee Details
+                            </h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="photo-upload">
+
+                        <div
+                            class="photo-preview"
+                            id="photoPreview"
+                        >
+                            <span>👤</span>
+                        </div>
+
+                        <div>
+
+                            <label
+                                for="picture"
+                                class="upload-button"
+                            >
+                                Upload Picture
+                            </label>
+
+                            <input
+                                type="file"
+                                id="picture"
+                                name="picture"
+                                accept="image/png,image/jpeg,image/webp"
+                                hidden
+                            >
+
+                            <p>
+                                JPG, PNG or WEBP.
+                                Recommended 1:1 image.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>Employee ID *</label>
+                            <input
+                                type="text"
+                                name="employee_id"
+                                required
+                                placeholder="TG001"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input
+                                type="text"
+                                name="full_name"
+                                required
+                                placeholder="Full Name"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Designation / Job Title *</label>
+                            <input
+                                type="text"
+                                name="designation"
+                                required
+                                placeholder="Software Engineer"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department / Business Unit *</label>
+                            <input
+                                type="text"
+                                name="department"
+                                required
+                                placeholder="Technology"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Official Email *</label>
+                            <input
+                                type="email"
+                                name="official_email"
+                                required
+                                placeholder="name@teleglobals.com"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contact Number *</label>
+                            <input
+                                type="tel"
+                                name="contact_number"
+                                required
+                                placeholder="+91"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Emergency Contact *</label>
+                            <input
+                                type="tel"
+                                name="emergency_contact"
+                                required
+                                placeholder="+91"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Office Location *</label>
+                            <input
+                                type="text"
+                                name="office_location"
+                                required
+                                placeholder="Pune"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>LinkedIn URL *</label>
+                            <input
+                                type="url"
+                                name="linkedin_url"
+                                required
+                                placeholder="https://linkedin.com/in/..."
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Instagram URL</label>
+                            <input
+                                type="url"
+                                name="instagram_url"
+                                placeholder="Optional"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input
+                                type="url"
+                                name="facebook_url"
+                                placeholder="Optional"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Blood Group</label>
+                            <select name="blood_group">
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date of Birth *</label>
+                            <input
+                                type="date"
+                                name="date_of_birth"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date of Joining</label>
+                            <input
+                                type="date"
+                                name="date_of_joining"
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="form-actions">
+
+                    <a
+                        href="/admin/employees"
+                        class="secondary-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Create Employee →
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+const pictureInput =
+    document.getElementById("picture");
+
+const preview =
+    document.getElementById("photoPreview");
+
+if (pictureInput) {
+
+    pictureInput.addEventListener(
+        "change",
+        function () {
+
+            const file = this.files[0];
+
+            if (!file) return;
+
+            const reader =
+                new FileReader();
+
+            reader.onload = function (event) {
+
+                preview.innerHTML =
+                    `<img src="${event.target.result}"
+                          alt="Employee Preview">`;
+
+            };
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+</script>
+
+{% endblock %}

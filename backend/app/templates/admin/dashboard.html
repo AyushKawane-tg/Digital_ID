@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/dashboard.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/"
+               target="_blank"
+               rel="noopener noreferrer">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal"
+                >
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item active">
+                <span>▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin/employees" class="nav-item">
+                <span>👥</span>
+                <span>Employees</span>
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span>
+                <span>Company Profile</span>
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span>
+                <span>Locations</span>
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span>
+                <span>Badges & Certificates</span>
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span>
+                <span>Company Deck</span>
+            </a>
+
+            <a href="/admin/employees/import" class="nav-item">
+                <span>📊</span>
+                <span>Excel Import</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- TOPBAR -->
+        <header class="admin-topbar">
+
+            <div>
+                <span class="page-label">
+                    ADMIN PANEL
+                </span>
+
+                <h1>
+                    Dashboard
+                </h1>
+            </div>
+
+            <div class="admin-user">
+
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div class="admin-user-info">
+                    <strong>
+                        {{ current_user.email }}
+                    </strong>
+
+                    <span>
+                        Administrator
+                    </span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME -->
+        <section class="dashboard-welcome">
+
+            <div>
+                <span class="welcome-label">
+                    TELEGLOBAL DIGITAL IDENTITY
+                </span>
+
+                <h2>
+                    Welcome back, Admin
+                </h2>
+
+                <p>
+                    Manage employees, company information,
+                    digital cards and QR codes from one place.
+                </p>
+            </div>
+
+            <a
+                href="/admin/employees"
+                class="primary-button"
+            >
+                Manage Employees →
+            </a>
+
+        </section>
+
+
+        <!-- STAT CARDS -->
+        <section class="dashboard-stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div>
+                    <span>Total Employees</span>
+
+                    <strong>
+                        {{ employee_count }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🏢
+                </div>
+
+                <div>
+                    <span>Companies</span>
+
+                    <strong>
+                        {{ company_count }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📱
+                </div>
+
+                <div>
+                    <span>Digital Cards</span>
+
+                    <strong>
+                        {{ employee_count }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Platform Status</span>
+
+                    <strong class="status-active">
+                        Active
+                    </strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        MANAGEMENT
+                    </span>
+
+                    <h3>
+                        Quick Actions
+                    </h3>
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <a
+                    href="/admin/employees"
+                    class="quick-card"
+                >
+                    <div class="quick-icon">
+                        👤
+                    </div>
+
+                    <div>
+                        <strong>
+                            Employees
+                        </strong>
+
+                        <span>
+                            Manage employee profiles
+                        </span>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+                </a>
+
+
+                <a
+                    href="/admin/employees/import"
+                    class="quick-card"
+                >
+                    <div class="quick-icon">
+                        📊
+                    </div>
+
+                    <div>
+                        <strong>
+                            Import Employees
+                        </strong>
+
+                        <span>
+                            Upload Excel records
+                        </span>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+                </a>
+
+
+                <a
+                    href="/admin/company"
+                    class="quick-card"
+                >
+                    <div class="quick-icon">
+                        🏢
+                    </div>
+
+                    <div>
+                        <strong>
+                            Company Profile
+                        </strong>
+
+                        <span>
+                            Manage company information
+                        </span>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+                </a>
+
+
+                <a
+                    href="/admin/company-deck"
+                    class="quick-card"
+                >
+                    <div class="quick-icon">
+                        📄
+                    </div>
+
+                    <div>
+                        <strong>
+                            Company Deck
+                        </strong>
+
+                        <span>
+                            Upload or download deck
+                        </span>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- EMPLOYEE OVERVIEW -->
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        DIRECTORY
+                    </span>
+
+                    <h3>
+                        Employee Management
+                    </h3>
+                </div>
+
+                <a
+                    href="/admin/employees"
+                    class="view-all"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="management-card">
+
+                <div class="management-card-content">
+
+                    <div class="management-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Digital Employee Identity
+                        </h4>
+
+                        <p>
+                            Create, edit, view and manage
+                            employee digital cards and QR codes.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <a
+                    href="/admin/employees"
+                    class="secondary-button"
+                >
+                    Open Employees
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPANY OVERVIEW -->
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        ORGANIZATION
+                    </span>
+
+                    <h3>
+                        Company Information
+                    </h3>
+                </div>
+
+            </div>
+
+
+            <div class="company-overview-grid">
+
+                <a
+                    href="/admin/company"
+                    class="overview-card"
+                >
+                    <span class="overview-icon">
+                        🏢
+                    </span>
+
+                    <strong>
+                        Company Profile
+                    </strong>
+
+                    <span>
+                        Logo, website, about,
+                        CEO, founder, mission & vision
+                    </span>
+                </a>
+
+
+                <a
+                    href="/admin/locations"
+                    class="overview-card"
+                >
+                    <span class="overview-icon">
+                        📍
+                    </span>
+
+                    <strong>
+                        Locations
+                    </strong>
+
+                    <span>
+                        Corporate office and
+                        other company locations
+                    </span>
+                </a>
+
+
+                <a
+                    href="/admin/badges"
+                    class="overview-card"
+                >
+                    <span class="overview-icon">
+                        🏅
+                    </span>
+
+                    <strong>
+                        Badges & Certificates
+                    </strong>
+
+                    <span>
+                        Manage company achievements
+                        and certifications
+                    </span>
+                </a>
+
+
+                <a
+                    href="/admin/company-deck"
+                    class="overview-card"
+                >
+                    <span class="overview-icon">
+                        📑
+                    </span>
+
+                    <strong>
+                        Company Deck
+                    </strong>
+
+                    <span>
+                        Manage and provide
+                        company deck downloads
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

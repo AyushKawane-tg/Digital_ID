@@ -1,0 +1,171 @@
+/* =========================================================
+   TeleGlobal Digital Card Platform
+   Employee QR Code page
+   ========================================================= */
+
+.qr-page {
+    display: flex;
+    justify-content: center;
+}
+
+.qr-card {
+    width: 100%;
+    max-width: 460px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eef4;
+    border-radius: 18px;
+
+    box-shadow: 0 10px 30px rgba(17, 48, 80, 0.08);
+
+    text-align: center;
+}
+
+.qr-header {
+    margin-bottom: 22px;
+}
+
+.qr-header h2 {
+    margin: 6px 0 4px;
+
+    color: #12395d;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.qr-header p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+.qr-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    margin: 0 auto 22px;
+
+    max-width: 280px;
+
+    background: #f7fafd;
+
+    border: 1px solid #e8eef4;
+    border-radius: 14px;
+}
+
+.qr-image {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+
+    display: block;
+}
+
+.qr-url {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    padding: 14px 16px;
+    margin-bottom: 22px;
+
+    background: #f7fafd;
+
+    border-radius: 10px;
+
+    text-align: left;
+}
+
+.qr-url span {
+    color: #8997a4;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.qr-url a {
+    color: #0b5cab;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    word-break: break-all;
+
+    text-decoration: none;
+}
+
+.qr-url a:hover {
+    text-decoration: underline;
+}
+
+.qr-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-bottom: 22px;
+}
+
+.qr-instruction {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    background: #eef6fc;
+
+    border-radius: 10px;
+
+    text-align: left;
+}
+
+.instruction-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+.qr-instruction p {
+    margin: 0;
+
+    color: #52677b;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 480px) {
+    .qr-actions {
+        flex-direction: column;
+    }
+
+    .qr-actions a {
+        justify-content: center;
+    }
+}

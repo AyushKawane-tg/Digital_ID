@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Locations | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/locations.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/" target="_blank">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal">
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees" class="nav-item">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations"
+               class="nav-item active">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+                <span class="page-label">
+                    COMPANY INFORMATION
+                </span>
+
+                <h1>
+                    Locations
+                </h1>
+            </div>
+
+            <a
+                href="/admin/locations/add"
+                class="primary-button"
+            >
+                + Add Location
+            </a>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <div class="directory-header">
+
+                <div>
+                    <span class="section-label">
+                        OFFICE LOCATIONS
+                    </span>
+
+                    <h2>
+                        Corporate & Other Locations
+                    </h2>
+
+                    <p>
+                        Manage TeleGlobal office locations
+                        displayed on digital cards.
+                    </p>
+                </div>
+
+            </div>
+
+
+            {% if locations %}
+
+            <div class="location-grid">
+
+                {% for location in locations %}
+
+                <div class="location-card">
+
+                    <div class="location-icon">
+                        📍
+                    </div>
+
+                    <div class="location-content">
+
+                        <span class="section-label">
+                            OFFICE
+                        </span>
+
+                        <h3>
+                            {{ location.location_name }}
+                        </h3>
+
+                        <p>
+                            {{ location.address }}
+                        </p>
+
+                        {% if location.contact_number %}
+
+                        <span class="location-contact">
+                            {{ location.contact_number }}
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="location-actions">
+
+                        <a
+                            href="/admin/locations/{{ location.id }}/edit"
+                            class="secondary-button"
+                        >
+                            Edit
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📍
+                </div>
+
+                <h3>
+                    No locations added
+                </h3>
+
+                <p>
+                    Add corporate and other office locations.
+                </p>
+
+                <a
+                    href="/admin/locations/add"
+                    class="primary-button"
+                >
+                    + Add Location
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

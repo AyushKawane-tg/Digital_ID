@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Company Deck | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/company.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+
+            <a
+                href="https://teleglobals.com/"
+                target="_blank"
+            >
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal"
+                >
+            </a>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees" class="nav-item">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a
+                href="/admin/company-deck"
+                class="nav-item active"
+            >
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    COMPANY INFORMATION
+                </span>
+
+                <h1>
+                    Company Deck
+                </h1>
+
+            </div>
+
+            <a
+                href="/admin/company"
+                class="secondary-button"
+            >
+                ← Company Profile
+            </a>
+
+        </header>
+
+
+        <section class="deck-page">
+
+            <div class="deck-card">
+
+                <div class="deck-icon">
+                    📄
+                </div>
+
+                <div class="deck-content">
+
+                    <span class="section-label">
+                        OFFICIAL COMPANY PRESENTATION
+                    </span>
+
+                    <h2>
+                        TeleGlobal Company Deck
+                    </h2>
+
+                    {% if company and company.company_deck %}
+
+                    <p>
+                        The current company deck is available
+                        for download.
+                    </p>
+
+                    <div class="deck-actions">
+
+                        <a
+                            href="/admin/company-deck/download"
+                            class="primary-button"
+                        >
+                            Download Company Deck ↓
+                        </a>
+
+                    </div>
+
+                    {% else %}
+
+                    <p>
+                        No company deck has been uploaded yet.
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="deck-info-card">
+
+                <span class="section-label">
+                    DIGITAL CARD
+                </span>
+
+                <h3>
+                    Company Deck Availability
+                </h3>
+
+                <p>
+                    Once uploaded, the company deck can be
+                    made available from the employee's
+                    digital card.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,296 @@
+/* =========================================================
+   TeleGlobal Digital Card Platform
+   Excel Import
+   ========================================================= */
+
+.import-page {
+    max-width: 820px;
+}
+
+.import-card {
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eef4;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 14px rgba(17, 48, 80, 0.05);
+}
+
+.import-header {
+    margin-bottom: 22px;
+}
+
+.import-header h2 {
+    margin: 5px 0 6px;
+
+    color: #12395d;
+
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.import-header p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+/* =========================
+   Drop zone
+   ========================= */
+
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 44px 24px;
+
+    text-align: center;
+
+    background: #f9fbfd;
+
+    border: 2px dashed #b9cad8;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+    background: #eef6fc;
+    border-color: #0b5cab;
+}
+
+.upload-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 56px;
+    height: 56px;
+
+    margin-bottom: 14px;
+
+    color: #0b5cab;
+    background: #eaf3fa;
+
+    border-radius: 12px;
+
+    font-size: 24px;
+}
+
+.drop-zone h3 {
+    margin: 0 0 6px;
+
+    color: #173f64;
+
+    font-size: 17px;
+}
+
+.drop-zone p {
+    margin: 0 0 12px;
+
+    color: #718096;
+
+    font-size: 13px;
+}
+
+.drop-zone > span {
+    padding: 4px 12px;
+
+    color: #31536e;
+    background: #eaf2f8;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+/* =========================
+   Selected file
+   ========================= */
+
+.selected-file {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 14px 16px;
+    margin-top: 18px;
+
+    background: #f7fafd;
+
+    border: 1px solid #e8eef4;
+    border-radius: 10px;
+}
+
+.selected-file > span {
+    font-size: 24px;
+}
+
+.selected-file > div {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.selected-file strong {
+    color: #173f64;
+    font-size: 14px;
+}
+
+.selected-file small {
+    color: #8997a4;
+    font-size: 12px;
+}
+
+.selected-file button {
+    width: 30px;
+    height: 30px;
+
+    color: #a61b1b;
+    background: #fdecec;
+
+    border: 0;
+    border-radius: 50%;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.selected-file button:hover {
+    background: #f7d4d4;
+}
+
+/* =========================
+   Required columns
+   ========================= */
+
+.import-requirements {
+    padding: 20px;
+    margin-top: 24px;
+
+    background: #f7fafd;
+
+    border-radius: 12px;
+}
+
+.import-requirements h3 {
+    margin: 0 0 12px;
+
+    color: #173f64;
+
+    font-size: 16px;
+}
+
+.column-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.column-list span {
+    padding: 5px 10px;
+
+    color: #31536e;
+    background: #eaf2f8;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-family: "Consolas", "Courier New", monospace;
+}
+
+/* =========================
+   Important note
+   ========================= */
+
+.import-note {
+    padding: 15px 18px;
+    margin-top: 18px;
+
+    background: #fff8ec;
+
+    border: 1px solid #f4e2c1;
+    border-radius: 10px;
+}
+
+.import-note strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #a06a12;
+
+    font-size: 13px;
+}
+
+.import-note p {
+    margin: 0;
+
+    color: #8a6d3b;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* =========================
+   Actions & result
+   ========================= */
+
+.import-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+.import-result {
+    margin-top: 22px;
+    padding: 18px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.import-result.success {
+    color: #1a6b47;
+    background: #e8f7ef;
+    border: 1px solid #bfe6d1;
+}
+
+.import-result.error {
+    color: #a61b1b;
+    background: #fff5f5;
+    border: 1px solid #f4cccc;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 560px) {
+    .import-actions {
+        flex-direction: column;
+    }
+
+    .import-actions a,
+    .import-actions button {
+        justify-content: center;
+        text-align: center;
+    }
+}

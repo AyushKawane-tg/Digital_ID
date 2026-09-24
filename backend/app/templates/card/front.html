@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}{{ employee.full_name }} | Digital ID Card{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        margin: 0;
+        background: #e9f0f6;
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .card-page {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 15px;
+    }
+
+    /* Portrait ID card, matching the physical badge */
+    .id-card {
+        width: 320px;
+        background: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 20px 55px rgba(20, 55, 85, .28);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Logo header */
+    .card-logo-bar {
+        padding: 14px 16px 10px;
+    }
+
+    .card-logo-bar img {
+        width: 120px;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* Photo */
+    .card-photo {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: top center;
+        background: #d7e2ec;
+        display: block;
+    }
+
+    /* White lower area with greeting */
+    .card-identity {
+        padding: 16px 20px 6px;
+    }
+
+    .greeting {
+        color: #0b74d8;
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 1;
+        margin: 0;
+    }
+
+    .iam {
+        color: #333;
+        font-size: 15px;
+        margin: 8px 0 2px;
+    }
+
+    .first-name {
+        color: #14171a;
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 1.1;
+        margin: 0;
+        word-break: break-word;
+    }
+
+    /* QR sits in its own row, centered — never over the name */
+    .card-qr {
+        display: flex;
+        justify-content: center;
+        padding: 14px 0 20px;
+    }
+
+    .card-qr img {
+        width: 110px;
+        height: 110px;
+    }
+
+    /* Blue accent strip at the very bottom */
+    .card-strip {
+        height: 18px;
+        background: linear-gradient(90deg, #0b74d8, #0a4f9c);
+    }
+
+    .card-flip-link {
+        display: block;
+        text-align: center;
+        margin-top: 18px;
+        color: #0b5cab;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card-page">
+
+    <div>
+
+        <div class="id-card">
+
+            <!-- Logo -->
+            <div class="card-logo-bar">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal">
+            </div>
+
+            <!-- Photo -->
+            {% if employee.picture %}
+                <img
+                    src="/uploads/{{ employee.picture }}"
+                    class="card-photo"
+                    alt="{{ employee.full_name }}">
+            {% else %}
+                <img
+                    src="{{ url_for('static', path='images/default/employee-placeholder.png') }}"
+                    class="card-photo"
+                    alt="Employee">
+            {% endif %}
+
+            <!-- Greeting -->
+            <div class="card-identity">
+                <p class="greeting">Hello</p>
+                <p class="iam">I am</p>
+                <p class="first-name">
+                    {{ employee.full_name.split(' ')[0] }}
+                </p>
+            </div>
+
+            <!-- QR (own row, centered) -->
+            <div class="card-qr">
+                <img
+                    src="/card/{{ employee.employee_id }}/qr"
+                    alt="QR Code">
+            </div>
+
+            <!-- Blue strip -->
+            <div class="card-strip"></div>
+
+        </div>
+
+        <a href="/card/{{ employee.employee_id }}/back" class="card-flip-link">
+            View Back →
+        </a>
+
+    </div>
+
+</div>
+{% endblock %}

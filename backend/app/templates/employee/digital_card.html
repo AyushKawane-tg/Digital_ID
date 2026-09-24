@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block title %}My Digital Card | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page {
+        min-height: 100vh;
+        background: #eef4f9;
+        padding: 30px 15px;
+    }
+
+    .container {
+        max-width: 850px;
+        margin: auto;
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .topbar h1 {
+        margin: 0;
+        color: #12395d;
+        font-size: 27px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .btn-light {
+        background: white;
+        color: #174a78;
+        border: 1px solid #dce5ed;
+    }
+
+    .card-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .digital-card {
+        width: 100%;
+        max-width: 520px;
+        background: white;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 15px 45px rgba(15, 45, 75, .16);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #073b70, #0b67ad);
+        padding: 25px;
+        color: white;
+        text-align: center;
+    }
+
+    .company-logo {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        background: white;
+        border-radius: 12px;
+        padding: 7px;
+        margin-bottom: 10px;
+    }
+
+    .company-name {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .employee-section {
+        text-align: center;
+        padding: 25px 25px 18px;
+    }
+
+    .employee-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #edf4f9;
+    }
+
+    .employee-name {
+        margin: 15px 0 5px;
+        color: #153e63;
+        font-size: 24px;
+    }
+
+    .designation {
+        color: #0b5cab;
+        font-weight: 600;
+    }
+
+    .department {
+        color: #7a8998;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .details {
+        padding: 0 28px 25px;
+    }
+
+    .detail {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 11px 0;
+        border-bottom: 1px solid #edf1f4;
+        font-size: 14px;
+    }
+
+    .detail:last-child {
+        border-bottom: none;
+    }
+
+    .label {
+        color: #7b8996;
+    }
+
+    .value {
+        color: #24445f;
+        text-align: right;
+        font-weight: 600;
+    }
+
+    .value a {
+        color: #0b5cab;
+        text-decoration: none;
+    }
+
+    .qr-section {
+        text-align: center;
+        padding: 20px;
+        background: #f6f9fb;
+    }
+
+    .qr-section img {
+        width: 150px;
+        height: 150px;
+        background: white;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .qr-section p {
+        margin: 10px 0 0;
+        color: #7a8998;
+        font-size: 12px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px;
+        background: white;
+    }
+
+    .primary {
+        background: #0b5cab;
+        color: white;
+    }
+
+    @media (max-width: 550px) {
+        .topbar {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .digital-card {
+            border-radius: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page">
+
+    <div class="container">
+
+        <div class="topbar">
+            <h1>My Digital Card</h1>
+
+            <a href="/employee/dashboard" class="btn btn-light">
+                Dashboard
+            </a>
+        </div>
+
+        <div class="card-wrapper">
+
+            <div class="digital-card">
+
+                <div class="card-header">
+                    <a href="https://teleglobals.com/" target="_blank">
+                        {% if company.logo %}
+                            <img
+                                src="{{ company.logo }}"
+                                class="company-logo"
+                                alt="{{ company.name }}">
+                        {% else %}
+                            <img
+                                src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                                class="company-logo"
+                                alt="TeleGlobal">
+                        {% endif %}
+                    </a>
+
+                    <div class="company-name">
+                        {{ company.name }}
+                    </div>
+                </div>
+
+                <div class="employee-section">
+
+                    {% if employee.picture %}
+                        <img
+                            src="{{ employee.picture }}"
+                            class="employee-photo"
+                            alt="{{ employee.full_name }}">
+                    {% else %}
+                        <img
+                            src="{{ url_for('static', path='images/default/employee-placeholder.png') }}"
+                            class="employee-photo"
+                            alt="Employee">
+                    {% endif %}
+
+                    <h2 class="employee-name">
+                        {{ employee.full_name }}
+                    </h2>
+
+                    <div class="designation">
+                        {{ employee.designation }}
+                    </div>
+
+                    <div class="department">
+                        {{ employee.department }}
+                    </div>
+
+                </div>
+
+                <div class="details">
+
+                    <div class="detail">
+                        <span class="label">Employee ID</span>
+                        <span class="value">{{ employee.employee_id }}</span>
+                    </div>
+
+                    <div class="detail">
+                        <span class="label">Email</span>
+                        <span class="value">
+                            <a href="mailto:{{ employee.official_email }}">
+                                {{ employee.official_email }}
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="detail">
+                        <span class="label">Phone</span>
+                        <span class="value">
+                            <a href="tel:{{ employee.contact_number }}">
+                                {{ employee.contact_number }}
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="detail">
+                        <span class="label">Office</span>
+                        <span class="value">
+                            {{ employee.office_location }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="qr-section">
+
+                    {% if employee.qr_code_path %}
+                        <img
+                            src="{{ employee.qr_code_path }}"
+                            alt="Digital Card QR">
+                    {% endif %}
+
+                    <p>Scan to open digital employee card</p>
+
+                </div>
+
+                <div class="actions">
+
+                    <a
+                        href="/card/{{ employee.employee_id }}"
+                        target="_blank"
+                        class="btn primary">
+                        Open Public Card
+                    </a>
+
+                    <a
+                        href="/card/{{ employee.employee_id }}/qr/download"
+                        class="btn btn-light">
+                        Download QR
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

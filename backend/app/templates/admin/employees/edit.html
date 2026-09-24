@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Employee | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/employee.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/"
+               target="_blank">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal"
+                >
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees"
+               class="nav-item active">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    EMPLOYEE MANAGEMENT
+                </span>
+
+                <h1>
+                    Edit Employee
+                </h1>
+
+            </div>
+
+            <a
+                href="/admin/employees"
+                class="secondary-button"
+            >
+                ← Back
+            </a>
+
+        </header>
+
+
+        <section class="form-page">
+
+            <form
+                method="POST"
+                action="/admin/employees/{{ employee.id }}/edit"
+                enctype="multipart/form-data"
+                class="employee-form"
+            >
+
+                <div class="form-card">
+
+                    <div class="form-card-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                EMPLOYEE PROFILE
+                            </span>
+
+                            <h2>
+                                {{ employee.full_name }}
+                            </h2>
+
+                        </div>
+
+                        <span class="employee-id">
+                            {{ employee.employee_id }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="photo-upload">
+
+                        <div class="photo-preview">
+
+                            {% if employee.picture %}
+
+                            <img
+                                src="/uploads/{{ employee.picture }}"
+                                alt="{{ employee.full_name }}"
+                            >
+
+                            {% else %}
+
+                            <span>
+                                {{ employee.full_name[0]|upper }}
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div>
+
+                            <label
+                                for="picture"
+                                class="upload-button"
+                            >
+                                Change Picture
+                            </label>
+
+                            <input
+                                type="file"
+                                id="picture"
+                                name="picture"
+                                accept="image/png,image/jpeg,image/webp"
+                                hidden
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>Employee ID</label>
+                            <input
+                                type="text"
+                                value="{{ employee.employee_id }}"
+                                disabled
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input
+                                type="text"
+                                name="full_name"
+                                value="{{ employee.full_name }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Designation *</label>
+                            <input
+                                type="text"
+                                name="designation"
+                                value="{{ employee.designation }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department *</label>
+                            <input
+                                type="text"
+                                name="department"
+                                value="{{ employee.department }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Official Email *</label>
+                            <input
+                                type="email"
+                                name="official_email"
+                                value="{{ employee.official_email }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contact Number *</label>
+                            <input
+                                type="tel"
+                                name="contact_number"
+                                value="{{ employee.contact_number }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Emergency Contact *</label>
+                            <input
+                                type="tel"
+                                name="emergency_contact"
+                                value="{{ employee.emergency_contact }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Office Location *</label>
+                            <input
+                                type="text"
+                                name="office_location"
+                                value="{{ employee.office_location }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>LinkedIn URL *</label>
+                            <input
+                                type="url"
+                                name="linkedin_url"
+                                value="{{ employee.linkedin_url }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Instagram URL</label>
+                            <input
+                                type="url"
+                                name="instagram_url"
+                                value="{{ employee.instagram_url or '' }}"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input
+                                type="url"
+                                name="facebook_url"
+                                value="{{ employee.facebook_url or '' }}"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Blood Group</label>
+
+                            <select name="blood_group">
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                {% for group in [
+                                    "A+", "A-", "B+", "B-",
+                                    "AB+", "AB-", "O+", "O-"
+                                ] %}
+
+                                <option
+                                    value="{{ group }}"
+                                    {% if employee.blood_group == group %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    {{ group }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date of Birth *</label>
+                            <input
+                                type="date"
+                                name="date_of_birth"
+                                value="{{ employee.date_of_birth }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date of Joining</label>
+                            <input
+                                type="date"
+                                name="date_of_joining"
+                                value="{{ employee.date_of_joining or '' }}"
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <a
+                        href="/admin/employees"
+                        class="secondary-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Save Changes →
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

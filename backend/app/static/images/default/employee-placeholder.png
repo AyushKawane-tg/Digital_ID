@@ -1,0 +1,106 @@
+from PIL import Image, ImageDraw, ImageFont
+from pathlib import Path
+
+# Output location
+output_path = Path(__file__).parent / "employee-placeholder.png"
+
+# Image size
+width, height = 500, 500
+
+# TeleGlobal-style background
+background = (235, 243, 250)
+primary = (11, 92, 171)
+dark = (23, 63, 100)
+
+# Create image
+image = Image.new(
+    "RGB",
+    (width, height),
+    background
+)
+
+draw = ImageDraw.Draw(image)
+
+# Center coordinates
+cx = width // 2
+
+# Head
+head_radius = 65
+head_center = (cx, 170)
+
+draw.ellipse(
+    [
+        head_center[0] - head_radius,
+        head_center[1] - head_radius,
+        head_center[0] + head_radius,
+        head_center[1] + head_radius
+    ],
+    fill=primary
+)
+
+# Body / shoulders
+body_top = 245
+body_width = 230
+body_height = 155
+
+draw.rounded_rectangle(
+    [
+        cx - body_width // 2,
+        body_top,
+        cx + body_width // 2,
+        body_top + body_height
+    ],
+    radius=70,
+    fill=primary
+)
+
+# Small TeleGlobal-style accent
+draw.rectangle(
+    [
+        cx - 115,
+        body_top + 100,
+        cx + 115,
+        body_top + body_height
+    ],
+    fill=dark
+)
+
+# Optional text
+try:
+    font = ImageFont.truetype(
+        "arial.ttf",
+        28
+    )
+except OSError:
+    font = ImageFont.load_default()
+
+text = "EMPLOYEE"
+
+bbox = draw.textbbox(
+    (0, 0),
+    text,
+    font=font
+)
+
+text_width = bbox[2] - bbox[0]
+text_height = bbox[3] - bbox[1]
+
+draw.text(
+    (
+        cx - text_width / 2,
+        425
+    ),
+    text,
+    fill=dark,
+    font=font
+)
+
+# Save PNG
+image.save(
+    output_path,
+    "PNG"
+)
+
+print(
+    f"Placeholder created successfully:\n{output_path}"
+)

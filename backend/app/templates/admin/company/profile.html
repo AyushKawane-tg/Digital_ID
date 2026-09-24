@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Company Profile | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/company.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/"
+               target="_blank"
+               rel="noopener noreferrer">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal">
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees" class="nav-item">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item active">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+        </div>
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+                <span class="page-label">
+                    ORGANIZATION
+                </span>
+
+                <h1>
+                    Company Profile
+                </h1>
+            </div>
+
+            <a
+                href="/admin/company/edit"
+                class="primary-button"
+            >
+                Edit Company →
+            </a>
+
+        </header>
+
+
+        <section class="company-page">
+
+            {% if company %}
+
+            <!-- COMPANY HEADER -->
+            <div class="company-hero">
+
+                <div class="company-logo">
+
+                    {% if company.logo %}
+
+                    <img
+                        src="{{ company.logo }}"
+                        alt="{{ company.name }}"
+                    >
+
+                    {% else %}
+
+                    <span>TG</span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="company-identity">
+
+                    <span class="section-label">
+                        COMPANY
+                    </span>
+
+                    <h2>
+                        {{ company.name }}
+                    </h2>
+
+                    {% if company.website %}
+
+                    <a
+                        href="{{ company.website }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {{ company.website }}
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPANY BASIC INFORMATION -->
+            <div class="company-grid">
+
+                <div class="company-card company-card-wide">
+
+                    <span class="section-label">
+                        ABOUT COMPANY
+                    </span>
+
+                    <h3>
+                        About
+                    </h3>
+
+                    <p>
+                        {{ company.about or
+                           "Company description not provided." }}
+                    </p>
+
+                </div>
+
+
+                <div class="company-card">
+
+                    <span class="section-label">
+                        CONTACT
+                    </span>
+
+                    <h3>
+                        Company Contact
+                    </h3>
+
+                    <div class="company-detail">
+
+                        <span>
+                            Phone
+                        </span>
+
+                        <strong>
+                            {{ company.contact_number or
+                               "Not provided" }}
+                        </strong>
+
+                    </div>
+
+                    <div class="company-detail">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong>
+                            {{ company.contact_email or
+                               "Not provided" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="company-card">
+
+                    <span class="section-label">
+                        LEADERSHIP
+                    </span>
+
+                    <h3>
+                        Leadership
+                    </h3>
+
+                    <div class="company-detail">
+
+                        <span>
+                            CEO
+                        </span>
+
+                        <strong>
+                            {{ company.ceo_name or
+                               "Not provided" }}
+                        </strong>
+
+                    </div>
+
+                    <div class="company-detail">
+
+                        <span>
+                            Founder
+                        </span>
+
+                        <strong>
+                            {{ company.founder_name or
+                               "Not provided" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="company-card company-card-wide">
+
+                    <span class="section-label">
+                        CORPORATE OFFICE
+                    </span>
+
+                    <h3>
+                        Corporate Address
+                    </h3>
+
+                    <p>
+                        {{ company.corporate_address or
+                           "Address not provided." }}
+                    </p>
+
+                </div>
+
+
+                <div class="company-card">
+
+                    <span class="section-label">
+                        MISSION
+                    </span>
+
+                    <h3>
+                        Our Mission
+                    </h3>
+
+                    <p>
+                        {{ company.mission or
+                           "Mission not provided." }}
+                    </p>
+
+                </div>
+
+
+                <div class="company-card">
+
+                    <span class="section-label">
+                        VISION
+                    </span>
+
+                    <h3>
+                        Our Vision
+                    </h3>
+
+                    <p>
+                        {{ company.vision or
+                           "Vision not provided." }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPANY DECK -->
+            <div class="company-card deck-card">
+
+                <div>
+
+                    <span class="section-label">
+                        COMPANY DECK
+                    </span>
+
+                    <h3>
+                        Company Presentation
+                    </h3>
+
+                    <p>
+                        Download the official TeleGlobal
+                        company deck.
+                    </p>
+
+                </div>
+
+                <a
+                    href="/admin/company-deck/download"
+                    class="secondary-button"
+                >
+                    Download Company Deck ↓
+                </a>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Company profile not configured
+                </h3>
+
+                <p>
+                    Add company information to display
+                    it on digital employee cards.
+                </p>
+
+                <a
+                    href="/admin/company/edit"
+                    class="primary-button"
+                >
+                    Configure Company
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

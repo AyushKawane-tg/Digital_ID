@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ employee.full_name }} | TeleGlobal
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/admin.css') }}?v={{ ASSET_V }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/employee.css') }}?v={{ ASSET_V }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-brand">
+            <a href="https://teleglobals.com/"
+               target="_blank">
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    alt="TeleGlobal"
+                >
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/admin/employees"
+               class="nav-item active">
+                <span>👥</span> Employees
+            </a>
+
+            <a href="/admin/company" class="nav-item">
+                <span>🏢</span> Company Profile
+            </a>
+
+            <a href="/admin/locations" class="nav-item">
+                <span>📍</span> Locations
+            </a>
+
+            <a href="/admin/badges" class="nav-item">
+                <span>🏅</span> Badges & Certificates
+            </a>
+
+            <a href="/admin/company-deck" class="nav-item">
+                <span>📄</span> Company Deck
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <span>↪</span> Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    EMPLOYEE PROFILE
+                </span>
+
+                <h1>
+                    {{ employee.full_name }}
+                </h1>
+
+            </div>
+
+            <div class="topbar-actions">
+
+                <a
+                    href="/admin/employees/{{ employee.id }}/edit"
+                    class="secondary-button"
+                >
+                    Edit Profile
+                </a>
+
+                <a
+                    href="/admin/employees/{{ employee.id }}/qr"
+                    class="primary-button"
+                >
+                    View QR
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <section class="profile-page">
+
+            <div class="profile-hero">
+
+                <div class="profile-photo">
+
+                    {% if employee.picture %}
+
+                    <img
+                        src="/uploads/{{ employee.picture }}"
+                        alt="{{ employee.full_name }}"
+                    >
+
+                    {% else %}
+
+                    <span>
+                        {{ employee.full_name[0]|upper }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="profile-identity">
+
+                    <span class="employee-id">
+                        {{ employee.employee_id }}
+                    </span>
+
+                    <h2>
+                        {{ employee.full_name }}
+                    </h2>
+
+                    <p>
+                        {{ employee.designation }}
+                    </p>
+
+                    <span>
+                        {{ employee.department }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-grid">
+
+                <div class="profile-card">
+
+                    <span class="section-label">
+                        CONTACT DETAILS
+                    </span>
+
+                    <h3>
+                        Employee Information
+                    </h3>
+
+                    <div class="detail-list">
+
+                        <div>
+                            <span>Official Email</span>
+                            <strong>
+                                {{ employee.official_email }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Contact Number</span>
+                            <strong>
+                                {{ employee.contact_number }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Emergency Contact</span>
+                            <strong>
+                                {{ employee.emergency_contact }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Office Location</span>
+                            <strong>
+                                {{ employee.office_location }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Date of Birth</span>
+                            <strong>
+                                {{ employee.date_of_birth }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Blood Group</span>
+                            <strong>
+                                {{ employee.blood_group or 'Not Provided' }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-card">
+
+                    <span class="section-label">
+                        SOCIAL PROFILES
+                    </span>
+
+                    <h3>
+                        Professional Links
+                    </h3>
+
+                    <div class="social-links">
+
+                        <a
+                            href="{{ employee.linkedin_url }}"
+                            target="_blank"
+                        >
+                            LinkedIn →
+                        </a>
+
+                        {% if employee.instagram_url %}
+
+                        <a
+                            href="{{ employee.instagram_url }}"
+                            target="_blank"
+                        >
+                            Instagram →
+                        </a>
+
+                        {% endif %}
+
+                        {% if employee.facebook_url %}
+
+                        <a
+                            href="{{ employee.facebook_url }}"
+                            target="_blank"
+                        >
+                            Facebook →
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-card">
+
+                    <span class="section-label">
+                        DIGITAL IDENTITY
+                    </span>
+
+                    <h3>
+                        Digital Card
+                    </h3>
+
+                    {% if employee.digital_card_url %}
+
+                    <a
+                        href="/card/{{ employee.employee_id }}"
+                        target="_blank"
+                        class="card-link-large"
+                    >
+                        Open Digital Card →
+                    </a>
+
+                    {% endif %}
+
+                    <a
+                        href="/admin/employees/{{ employee.id }}/qr"
+                        class="secondary-button"
+                    >
+                        Manage QR Code
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

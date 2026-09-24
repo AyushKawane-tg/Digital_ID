@@ -1,0 +1,597 @@
+/* =========================================================
+   TeleGlobal Digital Card Platform
+   Admin Layout (sidebar + topbar)
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    color: #243f56;
+    background: #f4f8fc;
+}
+
+.admin-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* =========================
+   Sidebar
+   ========================= */
+
+.admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(180deg, #06386a 0%, #0b3d78 100%);
+
+    color: #cfe1f4;
+
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+
+    height: 75px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand img {
+    max-width: 150px;
+    max-height: 46px;
+
+    object-fit: contain;
+
+    padding: 6px 10px;
+
+    background: #ffffff;
+
+    border-radius: 8px;
+}
+
+.sidebar-nav {
+    flex: 1;
+
+    padding: 18px 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 11px 14px;
+
+    color: #cfe1f4;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+.nav-item span:first-child {
+    width: 20px;
+
+    font-size: 15px;
+    text-align: center;
+}
+
+.nav-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.nav-item.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.16);
+
+    font-weight: 600;
+}
+
+.sidebar-bottom {
+    padding: 12px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.logout {
+    color: #ffd3d3;
+}
+
+.nav-item.logout:hover {
+    color: #ffffff;
+    background: rgba(224, 80, 59, 0.35);
+}
+
+/* =========================
+   Main area
+   ========================= */
+
+.admin-main {
+    flex: 1;
+
+    margin-left: 250px;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   Topbar
+   ========================= */
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 75px;
+
+    padding: 0 30px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e4ebf2;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.page-label {
+    display: block;
+
+    color: #1684ce;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.admin-topbar h1 {
+    margin: 2px 0 0;
+
+    color: #12395d;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    color: #ffffff;
+    background:
+        linear-gradient(135deg, #0b5cab 0%, #1684ce 100%);
+
+    border-radius: 50%;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.admin-user-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.admin-user-info strong {
+    color: #243f56;
+    font-size: 13px;
+}
+
+.admin-user-info span {
+    color: #8997a4;
+    font-size: 12px;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 860px) {
+    .admin-sidebar {
+        width: 66px;
+    }
+
+    .sidebar-brand {
+        justify-content: center;
+        padding: 0 8px;
+    }
+
+    .sidebar-brand img {
+        max-width: 44px;
+    }
+
+    .nav-item span:last-child {
+        display: none;
+    }
+
+    .nav-item {
+        justify-content: center;
+    }
+
+    .admin-main {
+        margin-left: 66px;
+    }
+}
+
+/* =========================================================
+   Shared admin content: buttons, forms, tables, states
+   (used across company / employees / locations / badges /
+    import pages)
+   ========================================================= */
+
+/* Page section spacing inside .admin-main */
+.admin-main > section {
+    margin: 26px 30px 40px;
+}
+
+/* ---- Buttons ---- */
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 20px;
+
+    color: #ffffff;
+    background:
+        linear-gradient(135deg, #0b5cab 0%, #1684ce 100%);
+
+    border: 0;
+    border-radius: 8px;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.primary-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(11, 92, 171, 0.3);
+}
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 11px 20px;
+
+    color: #0b5cab;
+    background: #eaf3fb;
+
+    border: 0;
+    border-radius: 8px;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background .2s ease;
+}
+
+.secondary-button:hover {
+    background: #d8ebf9;
+}
+
+/* ---- Forms ---- */
+.form-page {
+    max-width: 900px;
+}
+
+.form-card {
+    padding: 26px;
+    margin-bottom: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eef4;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 14px rgba(17, 48, 80, 0.05);
+}
+
+.form-card-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #eef2f6;
+}
+
+.form-card-header h2 {
+    margin: 4px 0 0;
+
+    color: #12395d;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 7px;
+
+    color: #52677b;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    color: #243f56;
+    background: #ffffff;
+
+    border: 1px solid #d5dfe8;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-family: inherit;
+
+    outline: none;
+
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #0b5cab;
+    box-shadow: 0 0 0 3px rgba(11, 92, 171, 0.10);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 6px;
+}
+
+/* ---- Upload button ---- */
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 9px 16px;
+
+    color: #0b5cab;
+    background: #eaf3fb;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    background: #d8ebf9;
+}
+
+/* ---- Directory / toolbar header ---- */
+.directory-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    margin-bottom: 18px;
+}
+
+/* ---- Empty state ---- */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    padding: 60px 24px;
+
+    background: #ffffff;
+
+    border: 1px dashed #d3dfe9;
+    border-radius: 16px;
+}
+
+.empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    margin-bottom: 18px;
+
+    background: #eaf3fb;
+
+    border-radius: 16px;
+
+    font-size: 32px;
+}
+
+.empty-state h3 {
+    margin: 0 0 8px;
+
+    color: #12395d;
+
+    font-size: 19px;
+}
+
+.empty-state p {
+    margin: 0 0 20px;
+
+    max-width: 380px;
+
+    color: #718096;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ---- Tables (employee list etc.) ---- */
+.data-table,
+.employee-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.data-table th,
+.employee-table th {
+    padding: 13px 16px;
+
+    color: #536b80;
+    background: #f7f9fb;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e8eef4;
+}
+
+.data-table td,
+.employee-table td {
+    padding: 13px 16px;
+
+    color: #344e65;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #eef2f6;
+}
+
+.data-table tbody tr:hover,
+.employee-table tbody tr:hover {
+    background: #fafcfd;
+}
+
+/* =========================================================
+   Delete button (employee list, import history)
+   ========================================================= */
+
+.delete-form {
+    display: inline;
+    margin: 0;
+}
+
+.delete-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 7px 12px;
+
+    color: #b42318;
+    background: #fdecec;
+
+    border: 1px solid #f4cccc;
+    border-radius: 7px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background .2s ease, color .2s ease;
+}
+
+.delete-btn:hover {
+    color: #ffffff;
+    background: #dc3545;
+    border-color: #dc3545;
+}
+
+/* When used as a small icon action inside the employee table row */
+.table-actions .delete-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    justify-content: center;
+}

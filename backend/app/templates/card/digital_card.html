@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ employee.full_name }} | {{ company.name }}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        margin: 0;
+        background: #eaf1f7;
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .public-card-page {
+        min-height: 100vh;
+        padding: 30px 15px 50px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .public-card-container {
+        width: 100%;
+        max-width: 720px;
+        text-align: center;
+    }
+
+    .brand-logo {
+        width: 150px;
+        max-height: 60px;
+        object-fit: contain;
+        margin-bottom: 22px;
+    }
+
+    /* Two ID cards side by side (front + back) */
+    .cards-wrap {
+        display: flex;
+        gap: 26px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    .id-card {
+        width: 320px;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 20px 55px rgba(20, 55, 85, .25);
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        background: #ffffff;
+    }
+
+    /* ---- FRONT (natural flow, no overlap) ---- */
+    .front-logo {
+        padding: 14px 16px 10px;
+    }
+
+    .front-logo img {
+        width: 120px;
+        height: auto;
+    }
+
+    .front-photo {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: top center;
+        background: #d7e2ec;
+        display: block;
+    }
+
+    .front-identity {
+        padding: 16px 20px 6px;
+    }
+
+    .greeting {
+        color: #0b74d8;
+        font-size: 30px;
+        font-weight: 800;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .iam {
+        color: #333;
+        font-size: 15px;
+        margin: 8px 0 2px;
+    }
+
+    .first-name {
+        color: #14171a;
+        font-size: 30px;
+        font-weight: 800;
+        margin: 0;
+        line-height: 1.1;
+        word-break: break-word;
+    }
+
+    .front-qr {
+        display: flex;
+        justify-content: center;
+        padding: 14px 0 20px;
+    }
+
+    .front-qr img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .card-strip {
+        height: 18px;
+        background: linear-gradient(90deg, #0b74d8, #0a4f9c);
+    }
+
+    /* ---- BACK ---- */
+    .id-card-back {
+        background: linear-gradient(160deg, #1a86e0 0%, #0b63b8 100%);
+        color: #fff;
+        padding: 26px 24px 30px;
+        box-sizing: border-box;
+    }
+
+    .emp-details {
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .divider {
+        border: 0;
+        border-top: 1px solid rgba(255,255,255,.35);
+        margin: 16px 0;
+    }
+
+    .rules {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 11.5px;
+        line-height: 1.6;
+        color: rgba(255,255,255,.92);
+    }
+
+    .rules li { margin-bottom: 6px; }
+
+    .issuing {
+        text-align: right;
+        font-size: 11px;
+        font-style: italic;
+        color: rgba(255,255,255,.8);
+        margin: 12px 0 4px;
+    }
+
+    .issuing-line {
+        border: 0;
+        border-top: 1px solid rgba(255,255,255,.5);
+        width: 120px;
+        margin: 4px 0 0 auto;
+    }
+
+    .return-to {
+        margin-top: 18px;
+        font-size: 11.5px;
+        line-height: 1.55;
+    }
+
+    .return-to .heading {
+        font-style: italic;
+        color: rgba(255,255,255,.85);
+        margin-bottom: 6px;
+    }
+
+    .return-to .company {
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    /* ---- Extra info / company ---- */
+    .info-panel {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(18,57,93,.10);
+        padding: 24px;
+        text-align: left;
+        margin-bottom: 22px;
+    }
+
+    .info-panel h3 {
+        margin: 0 0 14px;
+        color: #12395d;
+        font-size: 18px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #eef2f6;
+    }
+
+    .info-row:last-child { border-bottom: 0; }
+
+    .info-row .label { color: #7d8c99; font-size: 13px; }
+
+    .info-row .value {
+        color: #263f55;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .info-row .value a { color: #0b5cab; text-decoration: none; }
+
+    .social-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+    }
+
+    .social-links a {
+        padding: 9px 15px;
+        border-radius: 8px;
+        background: #edf4f9;
+        color: #0b5cab;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .company-panel {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(18,57,93,.10);
+        padding: 24px;
+        text-align: left;
+    }
+
+    .company-panel h3 { margin: 0 0 10px; color: #173f64; }
+
+    .company-panel p {
+        margin: 6px 0;
+        color: #64798c;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .company-panel a { color: #0b5cab; text-decoration: none; }
+
+    .badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+    }
+
+    .badge-chip {
+        padding: 6px 12px;
+        background: #eaf3fb;
+        color: #0b5cab;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .deck-btn {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 18px;
+        background: #0b5cab;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="public-card-page">
+    <div class="public-card-container">
+
+        <a href="{{ company.website or 'https://teleglobals.com/' }}"
+           target="_blank" rel="noopener"
+           title="Visit {{ company.name }} website">
+            {% if company.logo %}
+                <img src="{{ company.logo }}" class="brand-logo" alt="{{ company.name }}">
+            {% else %}
+                <img
+                    src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                    class="brand-logo"
+                    alt="{{ company.name }}">
+            {% endif %}
+        </a>
+
+        <div class="cards-wrap">
+
+            <!-- FRONT -->
+            <div class="id-card">
+                <div class="front-logo">
+                    <a href="{{ company.website or 'https://teleglobals.com/' }}"
+                       target="_blank" rel="noopener">
+                    {% if company.logo %}
+                        <img src="{{ company.logo }}" alt="{{ company.name }}">
+                    {% else %}
+                        <img
+                            src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                            alt="TeleGlobal">
+                    {% endif %}
+                    </a>
+                </div>
+
+                {% if employee.picture %}
+                    <img src="/uploads/{{ employee.picture }}"
+                         class="front-photo" alt="{{ employee.full_name }}">
+                {% else %}
+                    <img src="{{ url_for('static', path='images/default/employee-placeholder.png') }}"
+                         class="front-photo" alt="Employee">
+                {% endif %}
+
+                <div class="front-identity">
+                    <p class="greeting">Hello</p>
+                    <p class="iam">I am</p>
+                    <p class="first-name">
+                        {{ employee.full_name.split(' ')[0] }}
+                    </p>
+                </div>
+
+                <div class="front-qr">
+                    <img src="/card/{{ employee.employee_id }}/qr" alt="QR">
+                </div>
+
+                <div class="card-strip"></div>
+            </div>
+
+            <!-- BACK -->
+            <div class="id-card id-card-back">
+                <div class="emp-details">
+                    <div>Employee Name : {{ employee.full_name }}</div>
+                    <div>Employee Id : {{ employee.employee_id }}</div>
+                    <div>Blood Group : {{ employee.blood_group or "N/A" }}</div>
+                    <div>
+                        Date Of Joining :
+                        {% if employee.date_of_joining %}
+                            {{ employee.date_of_joining.strftime('%d/%m/%Y') }}
+                        {% else %} N/A {% endif %}
+                    </div>
+                    <div>Emergency No : {{ employee.emergency_contact or "N/A" }}</div>
+                </div>
+
+                <hr class="divider">
+
+                <ol class="rules">
+                    <li>This card must be displayed by holder while in office.</li>
+                    <li>Loss of card must be reported immediately to the issuing authority.</li>
+                    <li>This card is not transferable.</li>
+                </ol>
+
+                <div class="issuing">Issuing Authority</div>
+                <hr class="issuing-line">
+
+                <div class="return-to">
+                    <div class="heading">( If found please return to )</div>
+                    <div class="company">{{ company.name }}</div>
+                    <div>{{ company.corporate_address }}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Employee details -->
+        <div class="info-panel">
+            <h3>{{ employee.full_name }} — {{ employee.designation }}</h3>
+
+            <div class="info-row">
+                <span class="label">Employee ID</span>
+                <span class="value">{{ employee.employee_id }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Designation / Job Title</span>
+                <span class="value">{{ employee.designation }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Department / Business Unit</span>
+                <span class="value">{{ employee.department }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Official Email</span>
+                <span class="value">
+                    <a href="mailto:{{ employee.official_email }}">{{ employee.official_email }}</a>
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="label">Contact Number</span>
+                <span class="value">
+                    <a href="tel:{{ employee.contact_number }}">{{ employee.contact_number }}</a>
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="label">Emergency Contact</span>
+                <span class="value">{{ employee.emergency_contact or "N/A" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Office Location</span>
+                <span class="value">{{ employee.office_location }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Blood Group</span>
+                <span class="value">{{ employee.blood_group or "N/A" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Date of Birth</span>
+                <span class="value">
+                    {% if employee.date_of_birth %}
+                        {{ employee.date_of_birth.strftime('%d/%m/%Y') }}
+                    {% else %} N/A {% endif %}
+                </span>
+            </div>
+
+            <div class="social-links">
+                {% if employee.linkedin_url %}
+                    <a href="{{ employee.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
+                {% endif %}
+                {% if employee.instagram_url %}
+                    <a href="{{ employee.instagram_url }}" target="_blank" rel="noopener">Instagram</a>
+                {% endif %}
+                {% if employee.facebook_url %}
+                    <a href="{{ employee.facebook_url }}" target="_blank" rel="noopener">Facebook</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Company -->
+        <div class="company-panel">
+            <h3>{{ company.name }}</h3>
+
+            {% if company.about %}
+                <p><strong>About</strong><br>{{ company.about }}</p>
+            {% endif %}
+
+            {% if company.mission %}
+                <p><strong>Mission</strong><br>{{ company.mission }}</p>
+            {% endif %}
+            {% if company.vision %}
+                <p><strong>Vision</strong><br>{{ company.vision }}</p>
+            {% endif %}
+
+            <div class="info-row">
+                <span class="label">CEO</span>
+                <span class="value">{{ company.ceo_name or "N/A" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Founder</span>
+                <span class="value">{{ company.founder_name or "N/A" }}</span>
+            </div>
+            {% if company.contact_number %}
+            <div class="info-row">
+                <span class="label">Phone</span>
+                <span class="value"><a href="tel:{{ company.contact_number }}">{{ company.contact_number }}</a></span>
+            </div>
+            {% endif %}
+            {% if company.contact_email %}
+            <div class="info-row">
+                <span class="label">Email</span>
+                <span class="value"><a href="mailto:{{ company.contact_email }}">{{ company.contact_email }}</a></span>
+            </div>
+            {% endif %}
+            {% if company.website %}
+            <div class="info-row">
+                <span class="label">Website</span>
+                <span class="value"><a href="{{ company.website }}" target="_blank" rel="noopener">{{ company.website }}</a></span>
+            </div>
+            {% endif %}
+
+            {% if company.corporate_address %}
+                <p><strong>Corporate Office</strong><br>{{ company.corporate_address }}</p>
+            {% endif %}
+
+            {% if locations %}
+                <p><strong>Other Locations</strong></p>
+                {% for loc in locations %}
+                    <div class="info-row">
+                        <span class="label">{{ loc.location_name }}</span>
+                        <span class="value">{{ loc.address }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if badges %}
+                <p><strong>Badges &amp; Certificates</strong></p>
+                <div class="badges">
+                    {% for badge in badges %}
+                        <span class="badge-chip">{{ badge.title }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if company.company_deck %}
+                <a class="deck-btn"
+                   href="/card/{{ employee.employee_id }}/company-deck"
+                   target="_blank">
+                    Download Company Deck
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

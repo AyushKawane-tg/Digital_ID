@@ -1,0 +1,410 @@
+/* =========================================================
+   TeleGlobal Digital Card Platform
+   Base Styles
+   ========================================================= */
+
+:root {
+    --primary: #0b5cab;
+    --primary-dark: #06386a;
+    --primary-light: #eaf3fa;
+
+    --text: #173f64;
+    --text-dark: #12395d;
+    --text-muted: #718096;
+
+    --border: #e1e8ef;
+    --background: #f5f8fc;
+    --white: #ffffff;
+
+    --success: #198754;
+    --danger: #dc3545;
+    --warning: #d89b00;
+
+    --radius: 10px;
+    --radius-lg: 16px;
+
+    --shadow: 0 4px 16px rgba(17, 48, 80, 0.06);
+    --shadow-lg: 0 12px 35px rgba(17, 48, 80, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+    background: var(--background);
+    line-height: 1.5;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Buttons */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 40px;
+    padding: 9px 16px;
+
+    border: 0;
+    border-radius: var(--radius);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    color: #fff;
+    background: var(--primary);
+}
+
+.btn-primary:hover {
+    background: #084d91;
+}
+
+.btn-secondary {
+    color: #fff;
+    background: #607d95;
+}
+
+.btn-success {
+    color: #fff;
+    background: var(--success);
+}
+
+.btn-danger {
+    color: #fff;
+    background: var(--danger);
+}
+
+.btn-warning {
+    color: #fff;
+    background: var(--warning);
+}
+
+.btn-light {
+    color: var(--text);
+    background: #edf3f8;
+}
+
+.btn-outline {
+    color: var(--primary);
+    background: #fff;
+    border: 1px solid #cbd8e3;
+}
+
+.btn-outline:hover {
+    background: var(--primary-light);
+}
+
+/* Cards */
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+/* Forms */
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #52677b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-control,
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px 12px;
+
+    color: #243f56;
+    background: #fff;
+
+    border: 1px solid #d5dfe8;
+    border-radius: 8px;
+
+    font-size: 14px;
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(11, 92, 171, 0.08);
+}
+
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.form-help {
+    display: block;
+    margin-top: 5px;
+    color: #8997a4;
+    font-size: 12px;
+}
+
+/* Alerts */
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.alert-success {
+    color: #146c43;
+    background: #dff5e8;
+}
+
+.alert-danger {
+    color: #b42318;
+    background: #fdecec;
+}
+
+.alert-warning {
+    color: #856404;
+    background: #fff3cd;
+}
+
+.alert-info {
+    color: #075985;
+    background: #e0f2fe;
+}
+
+/* Tables */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 13px 14px;
+    border-bottom: 1px solid #edf1f4;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table th {
+    color: #536b80;
+    background: #f7f9fb;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.table td {
+    color: #344e65;
+}
+
+.table tbody tr:hover {
+    background: #fafcfd;
+}
+
+/* Status */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 4px 9px;
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-success {
+    color: #146c43;
+    background: #dff5e8;
+}
+
+.status-danger {
+    color: #b42318;
+    background: #fdecec;
+}
+
+.status-warning {
+    color: #856404;
+    background: #fff3cd;
+}
+
+.status-info {
+    color: #075985;
+    background: #e0f2fe;
+}
+
+/* Empty State */
+
+.empty-state {
+    padding: 45px 20px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.empty-state h3 {
+    margin: 0 0 7px;
+    color: var(--text);
+}
+
+/* Page Header */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 28px;
+}
+
+.page-header p {
+    margin: 5px 0 0;
+    color: var(--text-muted);
+}
+
+/* Utility */
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}

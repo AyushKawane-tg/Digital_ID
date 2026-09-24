@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Digital Card Not Found | TeleGlobal{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        margin: 0;
+        background: #eef4f9;
+    }
+
+    .error-page {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .error-card {
+        max-width: 470px;
+        width: 100%;
+        background: white;
+        border-radius: 18px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(18, 57, 93, .12);
+    }
+
+    .logo {
+        width: 100px;
+        max-height: 60px;
+        object-fit: contain;
+        margin-bottom: 20px;
+    }
+
+    .icon {
+        width: 65px;
+        height: 65px;
+        margin: auto;
+        border-radius: 50%;
+        background: #edf3f8;
+        color: #0b5cab;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    h1 {
+        color: #173f64;
+        margin: 20px 0 8px;
+        font-size: 25px;
+    }
+
+    p {
+        color: #718096;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 11px 18px;
+        border-radius: 8px;
+        background: #0b5cab;
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-page">
+
+    <div class="error-card">
+
+        <a href="https://teleglobals.com/" target="_blank">
+            <img
+                src="{{ url_for('static', path='images/logo/teleglobal-logo.png') }}"
+                class="logo"
+                alt="TeleGlobal">
+        </a>
+
+        <div class="icon">!</div>
+
+        <h1>Digital Card Not Found</h1>
+
+        <p>
+            The employee digital card you are looking for does not exist
+            or is no longer available.
+        </p>
+
+        <a href="https://teleglobals.com/" target="_blank" class="btn">
+            Visit TeleGlobal
+        </a>
+
+    </div>
+
+</div>
+{% endblock %}

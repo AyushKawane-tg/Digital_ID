@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}{{ employee.full_name }} | Employee Card (Back){% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        margin: 0;
+        background: #e9f0f6;
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .card-page {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 15px;
+    }
+
+    /* Portrait card, blue like the physical back */
+    .id-card-back {
+        width: 320px;
+        min-height: 500px;
+        background: linear-gradient(160deg, #1a86e0 0%, #0b63b8 100%);
+        color: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 20px 55px rgba(20, 55, 85, .28);
+        padding: 26px 24px 30px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .emp-details {
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .emp-details .line strong {
+        font-weight: 600;
+    }
+
+    .divider {
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, .35);
+        margin: 18px 0;
+    }
+
+    .rules {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 11.5px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, .92);
+    }
+
+    .rules li {
+        margin-bottom: 7px;
+    }
+
+    .issuing {
+        text-align: right;
+        font-size: 11px;
+        font-style: italic;
+        color: rgba(255, 255, 255, .8);
+        margin: 14px 0 4px;
+    }
+
+    .issuing-line {
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, .5);
+        width: 130px;
+        margin: 4px 0 0 auto;
+    }
+
+    .return-to {
+        margin-top: auto;
+        padding-top: 22px;
+        font-size: 11.5px;
+        line-height: 1.55;
+    }
+
+    .return-to .heading {
+        font-style: italic;
+        color: rgba(255, 255, 255, .85);
+        margin-bottom: 6px;
+    }
+
+    .return-to .company {
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    .card-flip-link {
+        display: block;
+        text-align: center;
+        margin-top: 18px;
+        color: #0b5cab;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card-page">
+
+    <div>
+
+        <div class="id-card-back">
+
+            <div class="emp-details">
+                <div class="line">
+                    Employee Name : {{ employee.full_name }}
+                </div>
+                <div class="line">
+                    Employee Id : {{ employee.employee_id }}
+                </div>
+                <div class="line">
+                    Blood Group : {{ employee.blood_group or "N/A" }}
+                </div>
+                <div class="line">
+                    Date Of Joining :
+                    {% if employee.date_of_joining %}
+                        {{ employee.date_of_joining.strftime('%d/%m/%Y') }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </div>
+                <div class="line">
+                    Emergency No : {{ employee.emergency_contact or "N/A" }}
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <ol class="rules">
+                <li>
+                    This card must be displayed by holder while in office.
+                </li>
+                <li>
+                    Loss of card must be reported immediately to the
+                    issuing authority.
+                </li>
+                <li>
+                    This card is not transferable.
+                </li>
+            </ol>
+
+            <div class="issuing">Issuing Authority</div>
+            <hr class="issuing-line">
+
+            <div class="return-to">
+                <div class="heading">( If found please return to )</div>
+                <div class="company">{{ company.name }}</div>
+                <div>
+                    {{ company.corporate_address or
+                       "Cerebrum IT Park, B-3, Office No. 4B, Kalyani Nagar, Pune, Maharashtra - 411014" }}
+                </div>
+            </div>
+
+        </div>
+
+        <a href="/card/{{ employee.employee_id }}" class="card-flip-link">
+            ← View Front
+        </a>
+
+    </div>
+
+</div>
+{% endblock %}
