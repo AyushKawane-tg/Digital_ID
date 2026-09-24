@@ -1,0 +1,348 @@
+Build a Proof of Concept (POC) for a **Digital Employee ID Card system using QR codes**.
+
+## Goal
+
+The system should allow an admin to create an employee profile, generate a unique QR code for that employee, and when the QR code is scanned, open a digital employee ID card displaying that employee's information.
+
+The main flow is:
+
+Admin → Create Employee → Save to MongoDB → Generate QR → Scan QR → Digital Employee ID Card
+
+## Tech Stack
+
+Use:
+
+* Frontend: React + Vite
+* Backend: Node.js + Express.js
+* Database: MongoDB + Mongoose
+* QR generation: `qrcode` npm package
+* Styling: Tailwind CSS
+* API communication: Axios
+
+Do NOT add authentication, Redis, cloud storage, or other advanced infrastructure in the first version. Keep this as a simple working POC.
+
+## Employee Data
+
+Create an Employee model with:
+
+```json
+{
+  "employeeId": "EMP1001",
+  "name": "Ayush Kawane",
+  "email": "ayush@company.com",
+  "phone": "+91-9876543210",
+  "company": "ABC Technologies",
+  "designation": "Software Engineer",
+  "department": "Engineering",
+  "reportingHead": "Rahul Sharma",
+  "officeAddress": "Pune, Maharashtra",
+  "photo": "",
+  "status": "ACTIVE"
+}
+```
+
+Make `employeeId` unique.
+
+Use an automatically generated employee ID when creating a new employee.
+
+## Backend APIs
+
+Create these APIs:
+
+### Employee APIs
+
+```text
+POST   /api/employees
+GET    /api/employees
+GET    /api/employees/:employeeId
+PUT    /api/employees/:employeeId
+DELETE /api/employees/:employeeId
+```
+
+### QR API
+
+```text
+GET /api/employees/:employeeId/qr
+```
+
+This endpoint should generate a QR code containing the frontend URL:
+
+```text
+http://localhost:5173/id/:employeeId
+```
+
+For example:
+
+```text
+http://localhost:5173/id/EMP1001
+```
+
+Return the QR code in a format that the React frontend can display.
+
+### Public Digital ID API
+
+Create:
+
+```text
+GET /api/id/:employeeId
+```
+
+This endpoint should return only the employee information required for the public digital ID card.
+
+Do not expose sensitive database fields.
+
+## Frontend Pages
+
+Create the following pages.
+
+### 1. Admin Dashboard
+
+Route:
+
+```text
+/admin
+```
+
+Display a table containing:
+
+* Employee ID
+* Name
+* Designation
+* Department
+* Status
+* View
+* Generate QR
+
+Add an:
+
+```text
++ Add Employee
+```
+
+button.
+
+### 2. Add Employee
+
+Route:
+
+```text
+/admin/employees/new
+```
+
+Create a form containing:
+
+* Name
+* Email
+* Phone
+* Company
+* Designation
+* Department
+* Reporting Head
+* Office Address
+* Photo
+* Status
+
+After submitting, create the employee through the backend API.
+
+Show the generated employee ID after successful creation.
+
+### 3. Employee Digital ID
+
+Route:
+
+```text
+/id/:employeeId
+```
+
+This page is the main feature of the POC.
+
+When someone scans the QR code, this page should open and fetch the employee information from:
+
+```text
+GET /api/id/:employeeId
+```
+
+Display a professional digital employee ID card.
+
+## Digital ID Card Design
+
+Create a modern corporate ID card.
+
+Example layout:
+
+```text
+┌────────────────────────────────┐
+│        ABC TECHNOLOGIES        │
+│                                │
+│          [ PHOTO ]             │
+│                                │
+│         AYUSH KAWANE           │
+│       Software Engineer        │
+│                                │
+│ Employee ID   EMP1001          │
+│ Department    Engineering      │
+│ Email         ayush@company.com│
+│ Phone         +91 XXXXX XXXXX  │
+│ Reporting     Rahul Sharma     │
+│                                │
+│ Office                        │
+│ Pune, Maharashtra              │
+│                                │
+│          ✓ ACTIVE              │
+└────────────────────────────────┘
+```
+
+Make it responsive so that it looks good on both desktop and mobile.
+
+The QR scan experience will primarily be tested on a mobile phone.
+
+## QR Code Display
+
+On the Admin Dashboard, when the admin clicks:
+
+```text
+Generate QR
+```
+
+display:
+
+* Employee name
+* Employee ID
+* QR code
+* Digital ID URL
+* Download QR button
+
+The QR should be high enough resolution to scan easily from a phone.
+
+## Project Structure
+
+Use a clean structure similar to:
+
+```text
+employee-digital-id/
+│
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   ├── controllers/
+│   │   └── employeeController.js
+│   ├── models/
+│   │   └── Employee.js
+│   ├── routes/
+│   │   └── employeeRoutes.js
+│   ├── services/
+│   │   └── qrService.js
+│   ├── server.js
+│   └── .env
+│
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── EmployeeForm.jsx
+    │   │   ├── EmployeeTable.jsx
+    │   │   ├── EmployeeCard.jsx
+    │   │   └── QRCodeDisplay.jsx
+    │   ├── pages/
+    │   │   ├── Admin.jsx
+    │   │   ├── AddEmployee.jsx
+    │   │   └── EmployeeId.jsx
+    │   ├── services/
+    │   │   └── api.js
+    │   ├── App.jsx
+    │   └── main.jsx
+    └── package.json
+```
+
+## Environment Variables
+
+Backend `.env`:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/employee-id
+FRONTEND_URL=http://localhost:5173
+```
+
+Use `FRONTEND_URL` when generating QR URLs instead of hardcoding the frontend URL throughout the code.
+
+## Seed Data
+
+Create a seed script containing at least 5 employees so the dashboard is populated when the POC starts.
+
+Example employees should have different:
+
+* Departments
+* Designations
+* Reporting heads
+* Statuses
+
+## Error Handling
+
+Handle:
+
+* Employee not found
+* Duplicate employee ID
+* Invalid employee data
+* MongoDB connection failure
+* QR generation failure
+* API errors
+
+Display user-friendly error messages in the frontend.
+
+## Important POC Requirement
+
+The complete flow must work:
+
+```text
+Admin Dashboard
+      ↓
+Add Employee
+      ↓
+MongoDB
+      ↓
+Generate QR
+      ↓
+Display QR
+      ↓
+Scan QR using phone
+      ↓
+/id/EMP1001
+      ↓
+Fetch employee data
+      ↓
+Display Digital Employee ID
+```
+
+## Future Architecture
+
+Do not implement these yet, but structure the code so they can be added later:
+
+* JWT authentication
+* Admin/Employee roles
+* Redis caching
+* Secure random QR tokens
+* QR expiry
+* QR revocation
+* Employee photo storage using Cloudinary/S3
+* QR scan history
+* Employee verification
+* Bulk employee upload
+* Printable physical ID cards
+* NFC support
+
+## Development Requirements
+
+1. Generate the complete project.
+2. Provide installation commands.
+3. Provide backend and frontend setup commands.
+4. Create all required files.
+5. Explain how to start MongoDB.
+6. Explain how to run backend and frontend.
+7. Provide Postman API examples.
+8. Provide seed-data instructions.
+9. Explain how to test QR scanning.
+10. Keep the implementation simple and beginner-friendly.
+11. Add comments to important backend logic.
+12. Do not over-engineer the POC.
+
+The final result should be a **working MERN POC**, not just UI mockups.
